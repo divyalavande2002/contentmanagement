@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: palegreen;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #blog-form {
+            width: 60%;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            height: 150px;
+            resize: vertical;
+        }
+
+        #image-container {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .image-box {
+            border: 2px dashed #ccc;
+            padding: 10px;
+            cursor: move;
+            user-drag: element;
+            user-select: none;
+        }
+
+        .image-box img {
+            width: 250px;
+            height: 250px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #save-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #save-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Create a Blog</h1>
+    </header>
+    <main>
+        <form id="blog-form">
+            <div class="form-group">
+                <label for="blog-title">Title</label>
+                <input type="text" id="blog-title" required>
+            </div>
+            <div class="form-group">
+                <label for="blog-content">Content</label>
+                <textarea id="blog-content" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="video-upload">Upload Video</label>
+                <input type="file" id="video-upload" accept="video/*">
+            </div>
+            <div class="form-group">
+                <label for="image-upload">Upload Images</label>
+                <input type="file" id="image-upload" accept="image/*" multiple>
+            </div>
+        </form>
+        <div id="image-container">
+            <div class="image-box" draggable="true">
+                <img src="nature.jpg" alt="Image 1">
+            </div>
+            <div class="image-box" draggable="true">
+                <img src="thar.jpeg" alt="Image 2">
+            </div>
+            <div class="image-box" draggable="true">
+                <img src="cycle.jpeg" alt="Image 3">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <button id="save-button">Save Blog</button>
+    </footer>
+    
+    <script>
+        const imageBoxes = document.querySelectorAll('.image-box');
+        let draggedImage = null;
+
+        imageBoxes.forEach(box => {
+            box.addEventListener('dragstart', (e) => {
+                draggedImage = e.target;
+                e.target.style.opacity = '0.5';
+            });
+
+            box.addEventListener('dragend', () => {
+                draggedImage.style.opacity = '1';
+                draggedImage = null;
+            });
+        });
+
+        imageBoxes.forEach(box => {
+            box.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            box.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                if (draggedImage) {
+                    box.style.border = '2px dashed #007bff';
+                }
+            });
+
+            box.addEventListener('dragleave', () => {
+                box.style.border = '2px dashed #ccc';
+            });
+
+            box.addEventListener('drop', () => {
+                if (draggedImage) {
+                    box.style.border = '2px dashed #ccc';
+                    box.appendChild(draggedImage);
+                }
+            });
+        });
+    </script
+</body>
+</html>
